@@ -7,16 +7,16 @@ resp = requests.get(url, headers={'user-agent': 'Mozilla/5.0 (Macintosh; Intel M
 
 resp.raise_for_status()
 
+# HTML parsing
 soup = BeautifulSoup(resp.text, 'html.parser')
 
 # Returns list containing each article
 articles = soup.find('div', {'class': 'column1'}).findAll('article', {'class': 'story'})
 # Article URL
 source = url + articles[0].div.a['href']
-
 # Article titles
-titles = soup.find('div', {'class': 'column1'}).findAll(True, {'class': 'story-title'})
-title = titles[0].text.strip()
+title = articles[0].text.strip()
+# titles = soup.find('div', {'class': 'column1'}).findAll(True, {'class': 'story-title'})
 
 # Article summaries
 summaries = soup.find('div', {'class': 'column1'}).findAll('p')
