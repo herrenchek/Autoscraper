@@ -10,13 +10,15 @@ resp.raise_for_status()
 # HTML parsing
 soup = BeautifulSoup(resp.text, 'html.parser')
 
-# Returns list containing each article
+# Returns list containing each Reuters article
 articles = soup.find('div', {'class': 'column1'}).findAll('article', {'class': 'story'})
+
 # Article URL
-source = url + articles[0].div.a['href']
+source = url + articles[1].div.a['href']
+
 # Article titles
-title = articles[0].text.strip()
-# titles = soup.find('div', {'class': 'column1'}).findAll(True, {'class': 'story-title'})
+titles = soup.find('div', {'class': 'column1'}).findAll(True, {'class': 'story-title'})
+title = titles[1].text.strip()
 
 # Article summaries
 summaries = soup.find('div', {'class': 'column1'}).findAll('p')
