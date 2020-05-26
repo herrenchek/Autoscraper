@@ -11,7 +11,11 @@ resp.raise_for_status()
 soup = BeautifulSoup(resp.text, 'html.parser')
 
 # Returns list containing each Reuters article
-articles = soup.find('div', {'class': 'column1'}).findAll('article', {'class': 'story'})
+divs = soup.find('div', {'class': 'column1'}).findAll('div', {'class': 'story-content'})
+# Article titles
+# titles = soup.find('div', {'class': 'column1'}).findAll(True, {'class': 'story-title'})
+# Article summaries
+# summaries = soup.find('div', {'class': 'column1'}).findAll('p')
 
 file = open('autonews.csv', 'w')
 
@@ -20,27 +24,14 @@ writer = csv.writer(file)
 writer.writerow(['Source', 'Title', 'Summary'])
 
 # Iterating through each article in the list
-for article in articles:
+for div in divs:
     # Article URL
-    source = url + article.div.a['href']
+    source = url + div.a['href']
     # Article title
-    title = article.h3
+    title = div.a.text.strip()
     # Article summary
-    summary = article.p
+    summary = div.text.strip()
 
     writer.writerow([source, title, summary])
-
-# Article titles
-titles = soup.find('div', {'class': 'column1'}).findAll(True, {'class': 'story-title'})
-# title = titles[1].text.strip()
-
-# Article summaries
-summaries = soup.find('div', {'class': 'column1'}).findAll('p')
-# summary = summaries[0].text.strip()
-
-# for title in titles:
-    # title = title.text.strip()
-    # writer.writerow([title])
-    # writer.writerow([source, title, summary])
 
 file.close()
