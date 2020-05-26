@@ -18,7 +18,8 @@ source = url + articles[1].div.a['href']
 
 # Article titles
 titles = soup.find('div', {'class': 'column1'}).findAll(True, {'class': 'story-title'})
-title = titles[1].text.strip()
+# title = titles[1].text.strip()
+
 
 # Article summaries
 summaries = soup.find('div', {'class': 'column1'}).findAll('p')
@@ -26,10 +27,15 @@ summary = summaries[0].text.strip()
 
 file = open('autonews.csv', 'w')
 
-writer = csv.writer(file)
-# Write header rows
-writer.writerow(['Source', 'Title', 'Summary'])
+for title in titles:
+    title = title.text.strip()
 
-writer.writerow([source, title, summary])
+    writer = csv.writer(file)
+    writer.writerow([title])
+
+# Write header rows
+# writer.writerow(['Source', 'Title', 'Summary'])
+
+# writer.writerow([source, title, summary])
 
 file.close()
