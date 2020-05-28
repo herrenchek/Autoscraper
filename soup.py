@@ -11,12 +11,12 @@ resp.raise_for_status()
 soup = BeautifulSoup(resp.text, 'html.parser')
 
 # Returns list containing each Reuters article
-divs = soup.find('div', {'class': 'column1'}).findAll('div', {'class': 'story-content'})
+divs = soup.find('div', {'class': 'column1'}).find_all('div', {'class': 'story-content'})
 
 # Article titles
-# titles = soup.find('div', {'class': 'column1'}).findAll(True, {'class': 'story-title'})
+# titles = soup.find('div', {'class': 'column1'}).find_all(True, {'class': 'story-title'})
 # Article summaries
-# summaries = soup.find('div', {'class': 'column1'}).findAll('p')
+# summaries = soup.find('div', {'class': 'column1'}).find_all('p')
 
 file = open('autonews.csv', 'w')
 
@@ -43,7 +43,7 @@ ed_r.raise_for_status()
 ed_soup = BeautifulSoup(ed_r.content, 'html5lib')
 
 # Returns list containing each item in the Edmunds XML feed
-items = ed_soup.findAll('item')
+items = ed_soup.find_all('item')
 
 # Iterating through each Edmunds item
 for item in items:
